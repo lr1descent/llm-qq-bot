@@ -1,6 +1,8 @@
 .venv/
 .env
 .env.*
+tests/
+*.sqlite3
 !.env.example
 data/
 __pycache__/
