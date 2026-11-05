@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>群聊 · 机器人管理后台</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <main id="auth-view" class="auth-layout" hidden>
+      <section class="auth-intro">
+        <div class="wordmark">群聊<span> / BOT CONSOLE</span></div>
+        <div>
+          <p class="eyebrow">属于你的群聊伙伴</p>
+          <h1>让每次回应，<br />都有自己的性格。</h1>
+          <p class="intro-copy">
+            在这里设定它的表达方式、选择使用的模型，<br />也看见每一段对话的来龙去脉。
+          </p>
+        </div>
+        <p class="muted">QQ 官方机器人 · OpenAI 官方 API</p>
+      </section>
+      <section class="auth-form-wrap">
+        <form id="auth-form" class="auth-form">
+          <p class="eyebrow">管理后台</p>
+          <h2 id="auth-title">登录</h2>
+          <p id="auth-description" class="muted"></p>
+          <label for="password">管理员密码</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            minlength="8"
+            maxlength="256"
+            required
+            autocomplete="current-password"
+            placeholder="至少 8 个字符"
+          />
+          <div id="confirm-field" hidden>
+            <label for="confirm-password">确认密码</label
+            ><input
+              id="confirm-password"
+              type="password"
+              autocomplete="new-password"
+              placeholder="再次输入密码"
+            />
+          </div>
+          <button type="submit" class="primary" id="auth-submit">
+            进入后台
+          </button>
+          <p id="auth-error" class="error" role="alert"></p>
+          <p class="small muted">
+            API 密钥通过服务器环境变量配置，不保存在浏览器中。
+          </p>
+        </form>
+      </section>
+    </main>
+    <div id="workspace" class="workspace" hidden>
+      <aside class="sidebar">
+        <a class="wordmark" href="#conversations">群聊<span> / BOT</span></a>
+        <p class="sidebar-label">工作空间</p>
+        <nav aria-label="主导航">
+          <a href="#conversations" data-nav="conversations"
+            ><span aria-hidden="true">☷</span>会话记录</a
+          >
+          <a href="#persona" data-nav="persona"
+            ><span aria-hidden="true">✎</span>人格提示词</a
+          >
+          <a href="#models" data-nav="models"
+            ><span aria-hidden="true">⇄</span>模型路由</a
+          >
+        </nav>
+        <div class="sidebar-bottom">
+          <p>连接状态</p>
+          <div id="connections"></div>
+          <button data-action="connection-help" class="text-button">
+            查看接入说明 ↗
+          </button>
+          <div class="account">
+            <span>管理员</span
+            ><button data-action="logout" class="text-button">退出</button>
+          </div>
+        </div>
+      </aside>
+      <main class="main-area">
+        <header class="topbar">
+          <span
+            >机器人管理后台 <span class="slash">/</span>
+            <strong id="breadcrumb">会话记录</strong></span
+          ><span class="small muted">私有工作空间</span>
+        </header>
+        <div id="page"></div>
+      </main>
+    </div>
+    <dialog id="modal">
+      <div class="modal-top">
+        <h2 id="modal-title"></h2>
+        <button data-action="close-modal" class="icon-button" aria-label="关闭">
+          ×
+        </button>
+      </div>
+      <div id="modal-body"></div>
+    </dialog>
+  </body>
+</html>

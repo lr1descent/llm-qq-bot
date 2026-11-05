@@ -1,0 +1,37 @@
+name: hekun-ai-gateway
+
+services:
+  new-api:
+    image: calciumion/new-api:v1.0.0-rc.48@sha256:51401a46510bf110ffafdf2cd7177e0b80bbcf02439e69b665c696f330e87ae5
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${NEW_API_PORT:-3000}:3000"
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:?Generate .env before starting}
+      SQLITE_PATH: /data/new-api.db
+      TZ: America/Los_Angeles
+      DEFAULT_LANGUAGE: zh-CN
+      SESSION_COOKIE_SECURE: "false"
+      TRUSTED_PROXIES: none
+      ERROR_LOG_ENABLED: "true"
+      NODE_NAME: hekun-local
+    volumes:
+      - ./data/new-api:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:3000/api/status | grep -q '\"success\":true'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  cpa:
+    image: eceasy/cli-proxy-api:v8.0.56@sha256:684b7c9314f1198ebcaa6b5bf513d6b90384ea4c9c1704988d905c5567785cc7
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8317:8317"
+      - "127.0.0.1:1455:1455"
+    volumes:
+      - ./.cpa.yaml:/CLIProxyAPI/config.yaml
+      - ./data/cpa/auths:/root/.cli-proxy-api
+      - ./data/cpa/logs:/CLIProxyAPI/logs
+

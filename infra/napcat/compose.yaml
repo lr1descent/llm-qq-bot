@@ -1,0 +1,19 @@
+name: hekun-qq
+
+services:
+  napcat:
+    image: mlikiowa/napcat-docker:v4.18.42@sha256:696e9574a0f6fb2f86cbecba8a32048f2a5823117dc9b13c6c02637ad890fa8b
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6099:6099"
+      - "127.0.0.1:3001:3000"
+    volumes:
+      - ./data/qq:/app/.config/QQ
+      - ./data/config:/app/napcat/config
+      - ./data/plugins:/app/napcat/plugins
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+

@@ -1,0 +1,13 @@
+# CLIProxyAPI v8 format. Runtime secrets belong in the ignored .cpa.yaml.
+server:
+  host: ""
+  port: 8317
+access:
+  api-keys: []
+oauth:
+  auth-dir: /root/.cli-proxy-api
+management:
+  # Docker bridge requests are remote to the container; host ports bind to 127.0.0.1.
+  allow-remote: true
+  secret-key: ""
+  disable-auto-update-panel: true
